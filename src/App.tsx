@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Hero from './components/Hero.tsx'
 import SpoilerToggle from './components/SpoilerToggle.tsx'
-import { treeData } from './data/index.ts'
+import { treeData, houses } from './data/index.ts'
+import TreeExplorer from './tree/TreeExplorer.tsx'
 
 /**
  * Data debug view (spec §13 milestone 2 exit criteria). Reached only with
@@ -20,14 +21,22 @@ const showDataDebug =
   typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('data')
 
 /**
- * Milestone-1 shell (spec §8): fixed nav with the spoiler toggle,
- * ambient cinematic layers, hero, and a placeholder for the
- * tree explorer (built in milestone 3).
+ * Milestone-3 shell (spec §8): fixed nav with the spoiler toggle,
+ * ambient cinematic layers, hero, house tabs, and the interactive
+ * family-tree explorer.
  */
 export default function App() {
   // Spoiler state lives here (spec §3.3) — SAFE MODE on every fresh
   // visit, never persisted to localStorage (locked decision #18).
   const [spoilers, setSpoilers] = useState(false)
+  const [activeHouseId, setActiveHouseId] = useState<string | null>(null)
+
+  const handleHouseSelect = useCallback((houseId: string | null) => {
+    setActiveHouseId(houseId)
+  }, [])
+
+  // Signature line for the active house
+  const activeHouse = houses.find(h => h.id === activeHouseId)
 
   if (showDataDebug) return <DataDebugView />
 
@@ -68,18 +77,46 @@ export default function App() {
       <main className="main-content">
         <Hero spoilers={spoilers} />
 
-        {/* Placeholder plate — replaced by the tree explorer in milestone 3 */}
-        <section id="explorer" className="explorer" aria-label="Tree explorer placeholder">
-          <div className="explorer__plate">
-            <h2 className="gold-text">The tree of houses awaits</h2>
-            <p>
-              Stark, Lannister, Targaryen and more — every bloodline of the Seven Kingdoms will
-              hang here. Hover a line to trace it, click any character for their story.
-            </p>
-            <span className="milestone-note">Tree explorer — milestone 3</span>
+        {/* Tree explorer section */}
+        <section
+          id="explorer"
+          className="explorer"
+          aria-label={`Family tree explorer${activeHouse ? ` — ${activeHouse.name}` : ''}`}
+        >
+          {/* Vertical lineage explorer */}
+          <div id="tree-viewport" className="tree-viewport">
+            <TreeExplorer
+              activeHouseId={activeHouseId}
+              spoilers={spoilers}
+              onHouseSelect={handleHouseSelect}
+            />
           </div>
+
+          {/* House context footer */}
+          {activeHouse && (
+            <div className="tree-context" role="status" aria-live="polite">
+              <span className="tree-context__sigil" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 60 60" fill="none">
+                  <path
+                    d="M30 5L55 15V30C55 42 42 52 30 55C18 52 5 42 5 30V15L30 5Z"
+                    fill={activeHouse.color}
+                    opacity="0.3"
+                  />
+                  <path
+                    d="M30 8L52 16V30C52 40 42 49 30 51C18 49 8 40 8 30V16L30 8Z"
+                    fill={activeHouse.color}
+                    opacity="0.6"
+                  />
+                </svg>
+              </span>
+              <span className="tree-context__text">
+                Exploring <strong>{activeHouse.name}</strong>{activeHouse.words ? ` — “${activeHouse.words}”` : ''}
+              </span>
+            </div>
+          )}
         </section>
       </main>
     </>
   )
 }
+
