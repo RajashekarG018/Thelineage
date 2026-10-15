@@ -1,0 +1,106 @@
+import type { Character } from '../types.ts'
+
+/**
+ * House Tully — Riverrun (spec §3.2). The Stark children's maternal line;
+ * Catelyn marries into Winterfell, Lysa into the Eyrie.
+ */
+export const tullyCharacters: Character[] = [
+  {
+    id: 'hoster-tully',
+    name: 'Hoster Tully',
+    titles: ['Lord of Riverrun', 'Lord Paramount of the Trident'],
+    houseId: 'tully',
+    siblingIds: ['brynden-tully'],
+    spouseIds: ['minisa-whent'],
+    children: ['catelyn-tully', 'lysa-tully', 'edmure-tully'],
+    living: false,
+    death: { season: 3, cause: 'Died of illness in his sickbed at Riverrun' },
+    bio: 'The proud, ailing Lord of Riverrun, who bound his house to the North and the Vale through the marriages of his daughters during Robert\'s Rebellion.',
+    bioEarly:
+      'Lord Paramount of the Trident, head of House Tully and father of Catelyn, Lysa and Edmure.',
+    era: 'Season 1–3',
+  },
+  {
+    id: 'minisa-whent',
+    name: 'Minisa Whent',
+    aliases: ['Minisa Tully'],
+    titles: ['Lady of Riverrun'],
+    houseId: 'tully',
+    spouseIds: ['hoster-tully'],
+    children: ['catelyn-tully', 'lysa-tully', 'edmure-tully'],
+    living: false,
+    death: { cause: 'Died in childbirth before the series' },
+    bio: 'Wife of Hoster Tully, born of House Whent of Harrenhal. She died young, leaving her children to be raised by their father.',
+    era: 'Background',
+  },
+  {
+    id: 'catelyn-tully',
+    name: 'Catelyn Stark',
+    aliases: ['Cat', 'Catelyn Tully'],
+    titles: ['Lady of Winterfell'],
+    houseId: 'tully',
+    parents: ['hoster-tully', 'minisa-whent'],
+    siblingIds: ['lysa-tully', 'edmure-tully'],
+    spouseIds: ['eddard-stark'],
+    children: ['robb-stark', 'sansa-stark', 'arya-stark', 'bran-stark', 'rickon-stark'],
+    living: false,
+    death: {
+      season: 3,
+      episode: 9,
+      cause: 'Throat cut at the Red Wedding',
+      summary: 'Murdered after watching her son Robb die before her.',
+    },
+    bio: 'Daughter of Riverrun, who wed Ned Stark in his murdered brother\'s place and became the steadfast heart of the Winterfell family. Her fierce love for her children drove her south, to her death at the Red Wedding.',
+    bioEarly:
+      'Eldest daughter of Lord Hoster Tully, raised at Riverrun on the words of her house: Family, Duty, Honor.',
+    quotes: ['On my honour as a Tully, on my love as a Stark.'],
+    era: 'Season 1–3',
+  },
+  {
+    id: 'lysa-tully',
+    name: 'Lysa Arryn',
+    aliases: ['Lysa Tully'],
+    titles: ['Lady of the Eyrie'],
+    houseId: 'tully',
+    parents: ['hoster-tully', 'minisa-whent'],
+    siblingIds: ['catelyn-tully', 'edmure-tully'],
+    spouseIds: ['jon-arryn'],
+    children: ['robin-arryn'],
+    living: false,
+    death: {
+      season: 4,
+      cause: 'Pushed through the Moon Door by Petyr Baelish',
+    },
+    bio: 'Catelyn\'s younger sister, married to the elderly Jon Arryn, and increasingly unmoored by grief and jealousy. She kept her son Robin at her breast long past boyhood and met her end at the Moon Door.',
+    era: 'Season 1–4',
+  },
+  {
+    id: 'edmure-tully',
+    name: 'Edmure Tully',
+    titles: ['Lord of Riverrun'],
+    houseId: 'tully',
+    parents: ['hoster-tully', 'minisa-whent'],
+    siblingIds: ['catelyn-tully', 'lysa-tully'],
+    nonBloodRelations: [
+      { kind: 'marriage', to: 'roslin-frey', note: 'wed at the Red Wedding' },
+    ],
+    living: true,
+    bio: 'The only son of Riverrun — well-meaning, sometimes rash, and forever in the shadow of his father and his nephew Robb. His own wedding became the trap of the Red Wedding.',
+    era: 'Season 1–8',
+  },
+  {
+    id: 'brynden-tully',
+    name: 'Brynden Tully',
+    aliases: ['The Blackfish'],
+    titles: ['Ser'],
+    houseId: 'tully',
+    siblingIds: ['hoster-tully'],
+    living: false,
+    death: {
+      season: 6,
+      cause: 'Killed defending Riverrun against the Lannisters (off-screen)',
+    },
+    bio: 'Hoster\'s younger brother and a legendary soldier, estranged from his lordly brother and devoted to his niece Catelyn. He held Riverrun to the last.',
+    era: 'Season 1–6',
+  },
+]
