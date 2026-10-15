@@ -1,9 +1,6 @@
 # The Lineage
 
-The Lineage is an interactive Westeros family-tree explorer built with React,
-TypeScript, and Vite. It presents hand-curated TV-canon character and house
-data in a dark, editorial interface with spoiler-safe and spoiler-revealing
-states.
+The Lineage is an interactive family tree of the GOT webseries
 
 The application is currently in an early implementation stage: the cinematic
 shell, hero section, spoiler toggle, and curated data layer are present; the
